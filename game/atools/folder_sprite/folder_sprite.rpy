@@ -4,6 +4,7 @@ default _sprite_saved_vars = {}
 init -999 python:
 
     import ctypes
+    import copy
 
 init -998 python:
 
@@ -35,9 +36,11 @@ init -998 python:
             if isinstance(go_foward, list) is False:
                 go_foward = [ go_foward ] 
             go_foward.reverse()
+            self._go_foward = go_foward
             if isinstance(attributes, list) is False:
                 attributes = [ attributes ] 
 
+            self._attributes_and_paths = {}
             self._attrs_to_save = ['_attrs_to_save']
             self._base_imgs = []
             self._folder_imgs = []
@@ -47,15 +50,32 @@ init -998 python:
                     if str("/".join(path_list[:-1]))==folder_path:
                         self._base_imgs.append([path_list[-1].split(".")[0], Image(path)])
                     else:
-                        if hasattr(self, path_list[-2]) is False:
-                            setattr(self, path_list[-2], 'default') 
-                            self._attrs_to_save.append(path_list[-2])
-                        self._folder_imgs.append(
-                            [path_list[-2], 
-                            path_list[-1].split(".")[0],
-                            ConditionSwitch(
-                                "_getSpriteSavedStateObj(ctypes.cast("+str(id(self))+", ctypes.py_object).value.getImageName()) is not None and _getSpriteSavedStateObj(ctypes.cast("+str(id(self))+", ctypes.py_object).value.getImageName())."+path_list[-2]+"=='"+path_list[-1].split(".")[0]+"'", path,
-                                "True", Null())])
+                        if path_list[-2] not in attributes:
+                            if hasattr(self, path_list[-2]) is False:
+                                setattr(self, path_list[-2], 'default') 
+                                self._attrs_to_save.append(path_list[-2])
+                            self._folder_imgs.append(
+                                [path_list[-2], 
+                                path_list[-1].split(".")[0],
+                                ConditionSwitch(
+                                    "_getSpriteSavedStateObj(ctypes.cast("+str(id(self))+", ctypes.py_object).value.getImageName()) is not None and _getSpriteSavedStateObj(ctypes.cast("+str(id(self))+", ctypes.py_object).value.getImageName())."+path_list[-2]+"=='"+path_list[-1].split(".")[0]+"'", path,
+                                    "True", Null())])
+                        else:
+                            if path_list[-2] not in self._attributes_and_paths:
+                                self._attributes_and_paths[path_list[-2]] = []
+                            self._attributes_and_paths[path_list[-2]].append(Attribute(path_list[-2], path_list[-1].split(".")[0], path, path_list[-1].split(".")[0]=='default'))
+
+            self._attributes_imgs = []
+            for key, value in self._attributes_and_paths.items():
+                if key not in go_foward:
+                    for y in value:
+                        self._attributes_imgs.append(y)
+            for x in go_foward:
+                for key, value in self._attributes_and_paths.items():
+                    if key==x:
+                        for y in value:
+                            self._attributes_imgs.append(y)
+
 
             _new_folder_imgs = []
             for x in self._folder_imgs:
@@ -83,6 +103,7 @@ init -998 python:
                 self._layered_img.append(x[1])
             for x in self._folder_imgs:
                 self._layered_img.append(x[2])
+            self._layered_img.extend(self._attributes_imgs)
 
             super().__init__(self._layered_img, *args, **kwargs)
 
@@ -107,7 +128,8 @@ init 501 python:
                         setattr(_sprite_saved_vars[sprite_name], x, getattr(_getSpriteByName(sprite_name), x))
                 for x in _sprite_saved_vars[sprite_name]._attrs_to_save:
                     if x not in _getSpriteByName(sprite_name)._attrs_to_save:
-                        delattr(_sprite_saved_vars[sprite_name], x)
+                        if hasattr(_sprite_saved_vars[sprite_name], x):
+                            delattr(_sprite_saved_vars[sprite_name], x)
                 return _sprite_saved_vars[sprite_name]
         return None
 
@@ -122,20 +144,13 @@ init 501 python:
     def f(name = None):
         return _getSpriteSavedStateObj(name)
 
-    # def _generateFolderSpritesAttributes(): # PRECISA SER IMPLEMENTADO NA CLASSE
-    #     for x in _sprite_images:
-    #         x._generateAttributes()
-    #     return
-
-    # _generateFolderSpritesAttributes()
-
 image tester = FolderSprite(
     "images/linda",
     xpos = 200,
     go_foward = 
-    ["body", "clothing", "hair"])
+    ["hair", "expression", "clothing"],
+    attributes = ["expression"])
     # hair = "default",
-    # attributes = ["expression"],
     # hair_xpos = 100,
     # hair_default_xpos = -100,
     # ypos = -100)#Falta implementar suporte para a opção go_foward e para setar a iamgem default dos objetos
