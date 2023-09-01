@@ -1,4 +1,4 @@
 *
 !*/
-!game/atools/*
+!game/atools/*/*
 !.gitignore
