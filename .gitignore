@@ -2,3 +2,4 @@
 !*/
 !game/atools/*/*
 !.gitignore
+*.rpyc
