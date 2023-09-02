@@ -15,7 +15,7 @@ init -998 python:
                 return True
         return False
 
-    def _image_objects(image_name = None):
+    def _imageObjects(image_name = None):
         response = {}
         for x in renpy.display.image.images:
             response[" ".join(x)] = renpy.display.image.images[x]
@@ -141,7 +141,7 @@ init 501 python:
                 return x
         return None
 
-    def f(name = None):
+    def fsc(name = None):
         return _getSpriteSavedStateObj(name)
 
 image tester = FolderSprite(
