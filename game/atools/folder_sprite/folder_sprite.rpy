@@ -52,7 +52,9 @@ init -998 python:
                     else:
                         if path_list[-2] not in attributes:
                             if hasattr(self, path_list[-2]) is False:
-                                setattr(self, path_list[-2], 'default') 
+                                setattr(self, path_list[-2], kwargs[path_list[-2]] if path_list[-2] in kwargs else 'default') 
+                                if path_list[-2] in kwargs:
+                                    kwargs.pop(path_list[-2])
                                 self._attrs_to_save.append(path_list[-2])
                             self._folder_imgs.append(
                                 [path_list[-2], 
@@ -63,7 +65,10 @@ init -998 python:
                         else:
                             if path_list[-2] not in self._attributes_and_paths:
                                 self._attributes_and_paths[path_list[-2]] = []
-                            self._attributes_and_paths[path_list[-2]].append(Attribute(path_list[-2], path_list[-1].split(".")[0], path, path_list[-1].split(".")[0]=='default'))
+                            self._attributes_and_paths[path_list[-2]].append(Attribute(path_list[-2], path_list[-1].split(".")[0], path, True if path_list[-2] in kwargs and kwargs[path_list[-2]]==path_list[-1].split(".")[0] else path_list[-1].split(".")[0]=='default' and path_list[-2] not in kwargs))
+            for x in attributes:
+                if x in kwargs:
+                    kwargs.pop(x)
 
             self._attributes_imgs = []
             for key, value in self._attributes_and_paths.items():
@@ -149,8 +154,9 @@ image tester = FolderSprite(
     xpos = 200,
     go_foward = 
     ["hair", "expression", "clothing"],
-    attributes = ["expression"])
-    # hair = "default",
+    attributes = ["expression"],
+    clothing = "bed",
+    expression = "02")
     # hair_xpos = 100,
     # hair_default_xpos = -100,
     # ypos = -100)#Falta implementar suporte para a opção go_foward e para setar a iamgem default dos objetos
