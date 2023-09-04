@@ -44,11 +44,22 @@ init -998 python:
             self._attrs_to_save = ['_attrs_to_save']
             self._base_imgs = []
             self._folder_imgs = []
+            kwargs_keys_to_be_deleted = []
             for path in renpy.list_files():
                 if path.startswith(folder_path) and _isPathWithCompatibleFormat(path):
                     path_list = path.split("/")
+
+                    current_transforms = {}
+                    for key, value in kwargs.items():
+                        for tkey, tvalue in renpy.atl.PROPERTIES.items():
+                            if key.endswith("_"+tkey) and (key.startswith(path_list[-2]) or (key.startswith(path_list[-1].split(".")[0]) and path==folder_path+"/"+path_list[-1])):
+                                if key==path_list[-2]+"_"+path_list[-1].split(".")[0]+"_"+tkey or key==path_list[-2]+"_"+tkey or key==path_list[-1].split(".")[0]+"_"+tkey:
+                                    current_transforms[tkey] = value
+                                    if key not in kwargs_keys_to_be_deleted:
+                                        kwargs_keys_to_be_deleted.append(key)
+
                     if str("/".join(path_list[:-1]))==folder_path:
-                        self._base_imgs.append([path_list[-1].split(".")[0], Image(path)])
+                        self._base_imgs.append([path_list[-1].split(".")[0], Transform(path, **current_transforms)])
                     else:
                         if path_list[-2] not in attributes:
                             if hasattr(self, path_list[-2]) is False:
@@ -60,12 +71,17 @@ init -998 python:
                                 [path_list[-2], 
                                 path_list[-1].split(".")[0],
                                 ConditionSwitch(
-                                    "_getSpriteSavedStateObj(ctypes.cast("+str(id(self))+", ctypes.py_object).value.getImageName()) is not None and _getSpriteSavedStateObj(ctypes.cast("+str(id(self))+", ctypes.py_object).value.getImageName())."+path_list[-2]+"=='"+path_list[-1].split(".")[0]+"'", path,
+                                    "_getSpriteSavedStateObj(ctypes.cast("+str(id(self))+", ctypes.py_object).value.getImageName()) is not None and _getSpriteSavedStateObj(ctypes.cast("+str(id(self))+", ctypes.py_object).value.getImageName())."+path_list[-2]+"=='"+path_list[-1].split(".")[0]+"'", 
+                                    Transform(path, **current_transforms),
                                     "True", Null())])
                         else:
                             if path_list[-2] not in self._attributes_and_paths:
                                 self._attributes_and_paths[path_list[-2]] = []
-                            self._attributes_and_paths[path_list[-2]].append(Attribute(path_list[-2], path_list[-1].split(".")[0], path, True if path_list[-2] in kwargs and kwargs[path_list[-2]]==path_list[-1].split(".")[0] else path_list[-1].split(".")[0]=='default' and path_list[-2] not in kwargs))
+                            self._attributes_and_paths[path_list[-2]].append(Attribute(path_list[-2], path_list[-1].split(".")[0], path, True if path_list[-2] in kwargs and kwargs[path_list[-2]]==path_list[-1].split(".")[0] else path_list[-1].split(".")[0]=='default' and path_list[-2] not in kwargs, **current_transforms))
+            
+            for key in kwargs_keys_to_be_deleted:
+                kwargs.pop(key)
+            
             for x in attributes:
                 if x in kwargs:
                     kwargs.pop(x)
@@ -153,10 +169,13 @@ image tester = FolderSprite(
     "images/linda",
     xpos = 200,
     go_foward = 
-    ["hair", "expression", "clothing"],
-    attributes = ["expression"],
+    ["hair", "expressions", "clothing"],
+    attributes = ["expressions"],
     clothing = "bed",
-    expression = "02")
-    # hair_xpos = 100,
-    # hair_default_xpos = -100,
-    # ypos = -100)#Falta implementar suporte para a opção go_foward e para setar a iamgem default dos objetos
+    expressions = "02",
+    hair_zoom = 0.9,
+    hair_default_blur = 3.4,
+    body_blur = 1.7,
+    expressions_default_blur = 4.9,
+    hair_default_xpos = -100,
+    ypos = 1100)#Falta implementar suporte para a opção go_foward e para setar a iamgem default dos objetos
