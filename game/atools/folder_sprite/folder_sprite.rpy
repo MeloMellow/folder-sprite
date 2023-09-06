@@ -26,17 +26,17 @@ init -998 python:
         return None
 
     class FolderSprite(LayeredImage):
-        def __init__(self, folder_path, go_foward = [], attributes = [], *args, **kwargs):
+        def __init__(self, folder_path, sort = [], attributes = [], sort_together = False, *args, **kwargs):
             
             global _sprite_images
             _sprite_images.append(self)
 
             self._img_name = None
 
-            if isinstance(go_foward, list) is False:
-                go_foward = [ go_foward ] 
-            go_foward.reverse()
-            self._go_foward = go_foward
+            if isinstance(sort, list) is False:
+                sort = [ sort ] 
+            sort.reverse()
+            self._sort = sort
             if isinstance(attributes, list) is False:
                 attributes = [ attributes ] 
 
@@ -86,45 +86,68 @@ init -998 python:
                 if x in kwargs:
                     kwargs.pop(x)
 
-            self._attributes_imgs = []
-            for key, value in self._attributes_and_paths.items():
-                if key not in go_foward:
-                    for y in value:
-                        self._attributes_imgs.append(y)
-            for x in go_foward:
+            self._layered_img = []
+            if sort_together:
+                imgs_list = []
+
+                imgs_list.extend(self._base_imgs)
+
+                for x in self._folder_imgs:
+                    imgs_list.append([x[0], x[1]])
+
                 for key, value in self._attributes_and_paths.items():
-                    if key==x:
+                    for x in value:
+                        imgs_list.append([key, x])
+
+                new_imgs_list = []
+                for x in imgs_list:
+                    if x[0] not in sort:
+                        new_imgs_list.append(x[1])
+                for x in sort:
+                    for y in imgs_list:
+                        if y[0]==x:
+                            new_imgs_list.append(y[1])
+                
+                self._layered_img = new_imgs_list
+                
+            else:
+                self._attributes_imgs = []
+                for key, value in self._attributes_and_paths.items():
+                    if key not in sort:
                         for y in value:
                             self._attributes_imgs.append(y)
+                for x in sort:
+                    for key, value in self._attributes_and_paths.items():
+                        if key==x:
+                            for y in value:
+                                self._attributes_imgs.append(y)
 
 
-            _new_folder_imgs = []
-            for x in self._folder_imgs:
-                if x[0] not in go_foward:
-                    _new_folder_imgs.append(x)
-            for x in go_foward:
-                for y in self._folder_imgs:
-                    if y[0]==x:
-                        _new_folder_imgs.append(y)
-            self._folder_imgs = _new_folder_imgs
+                _new_folder_imgs = []
+                for x in self._folder_imgs:
+                    if x[0] not in sort:
+                        _new_folder_imgs.append(x)
+                for x in sort:
+                    for y in self._folder_imgs:
+                        if y[0]==x:
+                            _new_folder_imgs.append(y)
+                self._folder_imgs = _new_folder_imgs
 
-            _new_base_imgs = []
-            for x in self._base_imgs:
-                if x[0] not in go_foward:
-                    _new_base_imgs.append(x)
-            for x in go_foward:
-                for y in self._base_imgs:
-                    if y[0]==x:
-                        _new_base_imgs.append(y)
-            self._base_imgs = _new_base_imgs
-                    
-
-            self._layered_img = []
-            for x in self._base_imgs:
-                self._layered_img.append(x[1])
-            for x in self._folder_imgs:
-                self._layered_img.append(x[2])
-            self._layered_img.extend(self._attributes_imgs)
+                _new_base_imgs = []
+                for x in self._base_imgs:
+                    if x[0] not in sort:
+                        _new_base_imgs.append(x)
+                for x in sort:
+                    for y in self._base_imgs:
+                        if y[0]==x:
+                            _new_base_imgs.append(y)
+                self._base_imgs = _new_base_imgs
+                        
+                for x in self._base_imgs:
+                    self._layered_img.append(x[1])
+                for x in self._folder_imgs:
+                    self._layered_img.append(x[2])
+                self._layered_img.extend(self._attributes_imgs)
 
             super().__init__(self._layered_img, *args, **kwargs)
 
@@ -165,17 +188,51 @@ init 501 python:
     def fsc(name = None):
         return _getSpriteSavedStateObj(name)
 
-image tester = FolderSprite(
+image linda = FolderSprite(
     "images/linda",
-    xpos = 200,
-    go_foward = 
-    ["hair", "expressions", "clothing"],
-    attributes = ["expressions"],
-    clothing = "bed",
-    expressions = "02",
-    hair_zoom = 0.9,
-    hair_default_blur = 3.4,
-    body_blur = 1.7,
-    expressions_default_blur = 4.9,
-    hair_default_xpos = -100,
-    ypos = 1100)#Falta implementar suporte para a opção go_foward e para setar a iamgem default dos objetos
+    attributes = ["face", "outfit"],
+    sort = "face",
+    face = "neutral")
+
+# layeredimage linda2:
+#     always body
+#     group outfit auto:
+#         attribute dress default
+#     group face auto:
+#         attribute neutral default
+
+# layeredimage linda2:
+#     always:
+#         "images/linda/body.png"
+#     group outfit:
+#         attribute dress default:
+#             "images/linda/clothing/dress.png"
+#         attribute bed:
+#             "images/linda/clothing/bed.png"
+#     group face:
+#         attribute neutral default:
+#             "images/linda/expressions/neutral.png"
+
+# image augustina = FolderSprite(
+#     "images/augustina"
+#     zoom = 1.4,
+#     at = recolor_transform,
+#     attributes = ["outfit", "face"]
+#     outfit = "dress",
+#     face_pos = (100, 100)
+#     face = "neutral"
+# )
+
+# layeredimage augustina:
+#     zoom 1.4
+#     at recolor_transform
+#     always:
+#         "augustina_base"
+#     attribute base2 default
+#     group outfit:
+#         attribute dress default:
+#             "augustina_dress"
+#         attribute uniform
+#     group face auto:
+#         pos (100, 100)
+#         attribute neutral default
