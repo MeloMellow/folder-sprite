@@ -185,7 +185,7 @@ init 501 python:
                 return x
         return None
 
-    def fsc(name = None):
+    def fsc(name):
         return _getSpriteSavedStateObj(name)
 
 image linda = FolderSprite(
