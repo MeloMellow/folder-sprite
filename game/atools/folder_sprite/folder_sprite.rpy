@@ -93,7 +93,7 @@ init -998 python:
                 imgs_list.extend(self._base_imgs)
 
                 for x in self._folder_imgs:
-                    imgs_list.append([x[0], x[1]])
+                    imgs_list.append([x[0], x[2]])
 
                 for key, value in self._attributes_and_paths.items():
                     for x in value:
