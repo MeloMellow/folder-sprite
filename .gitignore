@@ -3,4 +3,6 @@
 !game/atools/*/*
 !.gitignore
 !readme.md
+!readme.rst
+!repo-imgs/*
 *.rpyc
