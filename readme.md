@@ -7,27 +7,46 @@ FolderSprite is the easy solution when you have a sprite with a wide range of im
 
 Different from a Layeredimage (Renpy's default solution), FolderSprite uses a root folder given by the user to define and map the attributes and images of a sprite automatically.
 
-You can go to [FolderSprite vs Layeredimage](#foldersprite-vs-layeredimage) section to see usage examples.
+You can jump to [FolderSprite vs Layeredimage](#foldersprite-vs-layeredimage) section to see usage examples.
 
-## FolderSprite(`folder_path`, `sort` = [], `attributes` = [], `sort_together` = False, `**`properties)
+## FolderSprite(`folder_path`, `sort` = [], `attributes` = [], `sort_together` = False, `**properties`)
 
-This will generate an image-like object that can be used as a displayable
+This will generate an image-like object that can be used as a displayable.
 
 ### `folder_path`
 
 A string containing the path where the sprite images are located.
 
+Every image inside the `folder_path` directory will be considered a base image for the sprite, which means that it will always appear when the sprite is shown.
+
+Every folder inside the `folder_path` directory will be considered an image group. An image group can become an attribute group when defined by the user.
+
+```python
+image clara = FolderSprite("images/clara") # clara images directory
+```
+
 ### `sort`
 
 If not None, a string or string list that contain(s) the element(s) you want to be in front of the sprite. These elements can be the name of image group or base image.
 
-Every image in the root directory (`folder_path`) is considered a base image, and every folder in the root directory is considered a group of images.
+```python
+image clara = FolderSprite(
+    "images/clara",
+    sort = ["face", "dress"]) # making sure that the face always appears on the front of the dress
+```
 
 ### `attributes`
 
 If not None, a string or string list that contains the name(s) of the image group(s) that will be considered as attribute group(s).
 
 When an image group is defined as an attribute group, all the images in that group become attributes.
+
+```python
+image clara = FolderSprite(
+    "images/clara",
+    sort = ["face", "dress"],
+    attributes = ["face", "dress"]) # the image group face and dress are now attribute groups
+```
 
 ### `sort_together`
 
@@ -41,9 +60,35 @@ There are 3 layers in the sprite and these are:
 
 By default the Attribute groups always come first, then the Image groups and finally the Base images.
 
-If you want to use the `sort` parameter to set a base image to appear in front of a group of images, you need to set `sort_together` to True.
+If you want to use the `sort` parameter to set a base image to appear in front of a image/attribute group, `sort_together` must be defined as True.
 
-### `**`properties
+```python
+image clara = FolderSprite(
+    "images/clara",
+    sort = ["face", "left_arm", "dress"], # left_arm is a base image that will be positioned in front of the dress attribute group
+    attributes = ["face", "dress"])
+```
+
+### default keywords
+
+An image group can have a default image that will be displayed as soon as the sprite is shown for the first time. This default image can be defined in two ways:
+
+If an image within the image group has the name "default", it will be used as the default image for the image group, i.e. when the sprite is shown for the first time, the default image will be shown along with it. This is not valid for attribute groups.
+
+Another way to set an image as the default within an image/attribute group is to pass the group name keyword and set it as the image name, for example:
+
+```python
+image clara = FolderSprite(
+    "images/clara",
+    sort = ["face", "left_arm", "dress"],
+    attributes = ["face", "dress"],
+    face = "neutral",
+    dress = "casual")
+```
+
+### other keywords
+
+Any other keywords will be interpreted as transform properties.
 
 ## FolderSprite vs Layeredimage
 
