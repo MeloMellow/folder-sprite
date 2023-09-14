@@ -27,7 +27,7 @@ image clara = FolderSprite("images/clara") # clara images directory
 
 ### `sort`
 
-If not None, a string or string list that contain(s) the element(s) you want to be in front of the sprite. These elements can be the name of image group or base image.
+A string or string list that contain(s) the element(s) you want to be in front of the sprite. These elements can be the name of image group or base image.
 
 ```python
 image clara = FolderSprite(
@@ -37,7 +37,7 @@ image clara = FolderSprite(
 
 ### `attributes`
 
-If not None, a string or string list that contains the name(s) of the image group(s) that will be considered as attribute group(s).
+A string or string list that contains the name(s) of the image group(s) that will be considered as attribute group(s).
 
 When an image group is defined as an attribute group, all the images in that group become attributes.
 
@@ -66,7 +66,8 @@ If you want to use the `sort` parameter to set a base image to appear in front o
 image clara = FolderSprite(
     "images/clara",
     sort = ["face", "left_arm", "dress"], # left_arm is a base image that will be positioned in front of the dress attribute group
-    attributes = ["face", "dress"])
+    attributes = ["face", "dress"],
+    sort_together = True) # defining sort_together to True
 ```
 
 ### default keywords
@@ -82,13 +83,48 @@ image clara = FolderSprite(
     "images/clara",
     sort = ["face", "left_arm", "dress"],
     attributes = ["face", "dress"],
-    face = "neutral",
-    dress = "casual")
+    sort_together = True,
+    face = "neutral", # now the neutral image is the face group's default image
+    dress = "casual") # now the casual image is the dress group's default image
+
+label start:
+    show clara # displaying clara with neutral face and casual dress
+    "Clara likes this dress."
 ```
 
 ### other keywords
 
-Any other keywords will be interpreted as transform properties.
+Any other keywords will be interpreted as [transform properties](https://www.renpy.org/doc/html/atl.html#list-of-transform-properties) for the entire sprite.
+
+```python
+image clara = FolderSprite(
+    "images/clara",
+    sort = ["face", "left_arm", "dress"],
+    attributes = ["face", "dress"],
+    sort_together = True,
+    face = "neutral",
+    dress = "casual",
+    xpos = 200) # We move our sprite a little to the right
+```
+
+You can also apply transform properties to an image or image/attribute group. To do this, you need to use the following pattern:
+
+    [base image or group]_[transform property] = value
+    [group]_[image from the group]_[transform property] = value
+
+```python
+image clara = FolderSprite(
+    "images/clara",
+    sort = ["face", "left_arm", "dress"],
+    attributes = ["face", "dress"],
+    sort_together = True,
+    face = "neutral",
+    dress = "casual",
+    xpos = 200,
+    face_xpos = 100, # we moved our entire face group a little to the right
+    left_arm_zoom = 1.3, # we zoom in on our base image left_arm
+    dress_casual_blur = 2.3) # we applied a blur only to the casual image of the dress attribute group
+```
 
 ## FolderSprite vs Layeredimage
 
