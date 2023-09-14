@@ -126,6 +126,10 @@ image clara = FolderSprite(
     dress_casual_blur = 2.3) # we applied a blur only to the casual image of the dress attribute group
 ```
 
+### manipulating image groups
+
+By default Renpy already gives us a way to manipulate the attributes of the sprite that is being projected onto the screen, but how do we manipulate a group of images that is not an attribute group?
+
 ## FolderSprite vs Layeredimage
 
 The following will compare examples of sprites made with FolderSprite and with Layeredimages.
