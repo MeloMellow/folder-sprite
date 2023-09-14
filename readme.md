@@ -94,7 +94,7 @@ label start:
 
 ### other keywords
 
-Any other keywords will be interpreted as [transform properties](https://www.renpy.org/doc/html/atl.html#list-of-transform-properties) for the entire sprite.
+Any other keywords will be interpreted as <a href="https://www.renpy.org/doc/html/atl.html#list-of-transform-properties" target="_blank">transform properties</a> for the entire sprite.
 
 ```python
 image clara = FolderSprite(
