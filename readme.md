@@ -9,11 +9,13 @@ Different from a Layeredimage (Renpy's default solution), FolderSprite uses a ro
 
 You can jump to [FolderSprite vs Layeredimage](#foldersprite-vs-layeredimage) section to see usage examples.
 
-## FolderSprite(`folder_path`, `sort` = [], `attributes` = [], `sort_together` = False, `**properties`)
+## FolderSprite class
+
+### FolderSprite(`folder_path`, `sort` = [], `attributes` = [], `sort_together` = False, `**properties`)
 
 This will generate an image-like object that can be used as a displayable.
 
-### `folder_path`
+### `folder_path` param
 
 A string containing the path where the sprite images are located.
 
@@ -25,7 +27,7 @@ Every folder inside the `folder_path` directory will be considered an image grou
 image clara = FolderSprite("images/clara") # clara images directory
 ```
 
-### `sort`
+### `sort` param
 
 A string or string list that contain(s) the element(s) you want to be in front of the sprite. These elements can be the name of image group or base image.
 
@@ -35,7 +37,7 @@ image clara = FolderSprite(
     sort = ["face", "dress"]) # making sure that the face always appears on the front of the dress
 ```
 
-### `attributes`
+### `attributes` param
 
 A string or string list that contains the name(s) of the image group(s) that will be considered as attribute group(s).
 
@@ -48,7 +50,7 @@ image clara = FolderSprite(
     attributes = ["face", "dress"]) # the image group face and dress are now attribute groups
 ```
 
-### `sort_together`
+### `sort_together` param
 
 If True, Sorts all base images, image groups and attribute groups on the same layer.
 
@@ -126,7 +128,7 @@ image clara = FolderSprite(
     dress_casual_blur = 2.3) # we applied a blur only to the casual image of the dress attribute group
 ```
 
-### manipulating image groups
+## Manipulating image groups
 
 By default Renpy already gives us a way to manipulate the attributes of the sprite that is being projected onto the screen, but how do we manipulate a group of images that is not an attribute group?
 
@@ -157,10 +159,10 @@ label start:
     show clara sad # displaying clara with sad face
     "Clara does not like this dress"
 
-    $ fsc("clara").dress = "school" # defining dress as school using python
+    $ fsc("clara").dress = "school" # defining dress as school again using python
 
     show clara -sad # displaying clara with happy face again
-    "Clara does not like this dress"
+    "Clara likes this dress"
 ```
 
 Note that we only use fschange/fsc to change the behavior of a image group that is not an attribute group. using fschange/fsc to change the behavior of an attribute group will not work.
