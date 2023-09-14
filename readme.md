@@ -84,17 +84,17 @@ image clara = FolderSprite(
     sort = ["face", "left_arm", "dress"],
     attributes = ["face", "dress"],
     sort_together = True,
-    face = "neutral", # now the neutral image is the face group's default image
+    face = "happy", # now the happy image is the face group's default image
     dress = "casual") # now the casual image is the dress group's default image
 
 label start:
-    show clara # displaying clara with neutral face and casual dress
+    show clara# displaying clara with happy face and casual dress
     "Clara likes this dress."
 ```
 
 ### other keywords
 
-Any other keywords will be interpreted as <a href="https://www.renpy.org/doc/html/atl.html#list-of-transform-properties" target="_blank">transform properties</a> for the entire sprite.
+Any other keywords will be interpreted as [transform properties](https://www.renpy.org/doc/html/atl.html#list-of-transform-properties) for the entire sprite.
 
 ```python
 image clara = FolderSprite(
@@ -102,7 +102,7 @@ image clara = FolderSprite(
     sort = ["face", "left_arm", "dress"],
     attributes = ["face", "dress"],
     sort_together = True,
-    face = "neutral",
+    face = "happy",
     dress = "casual",
     xpos = 200) # We move our sprite a little to the right
 ```
@@ -118,10 +118,10 @@ image clara = FolderSprite(
     sort = ["face", "left_arm", "dress"],
     attributes = ["face", "dress"],
     sort_together = True,
-    face = "neutral",
+    face = "happy",
     dress = "casual",
     xpos = 200,
-    face_xpos = 100, # we moved our entire face group a little to the right
+    face_xpos = 100, # we moved our entire face attribute group a little to the right
     left_arm_zoom = 1.3, # we zoom in on our base image left_arm
     dress_casual_blur = 2.3) # we applied a blur only to the casual image of the dress attribute group
 ```
@@ -129,6 +129,41 @@ image clara = FolderSprite(
 ### manipulating image groups
 
 By default Renpy already gives us a way to manipulate the attributes of the sprite that is being projected onto the screen, but how do we manipulate a group of images that is not an attribute group?
+
+This is easy, just use the fschange statement or, if you prefer, the python function fsc:
+
+    fschange [image] [image group] [image from the group]
+    fsc("[image]").[image group] = "[image from the group]"
+
+```python
+image clara = FolderSprite(
+    "images/clara",
+    sort = ["face", "left_arm", "dress"],
+    attributes = "face", # we are no longer considering dress as an attribute group.
+    sort_together = True,
+    face = "happy",
+    dress = "school", # school is now the default image of the dress group
+    xpos = 200,
+    face_xpos = 100,
+    left_arm_zoom = 1.3,
+    dress_casual_blur = 2.3)
+
+label start:
+    show clara # displaying clara with happy face and school dress
+    "Clara likes this dress."
+
+    fschange clara dress casual # defining dress as casual
+
+    show clara sad # displaying clara with sad face
+    "Clara does not like this dress"
+
+    $ fsc("clara").dress = "school" # defining dress as school using python
+
+    show clara -sad # displaying clara with happy face again
+    "Clara does not like this dress"
+```
+
+Note that we only use fschange/fsc to change the behavior of a image group that is not an attribute group. using fschange/fsc to change the behavior of an attribute group will not work.
 
 ## FolderSprite vs Layeredimage
 
