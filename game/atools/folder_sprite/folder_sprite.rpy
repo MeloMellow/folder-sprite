@@ -26,7 +26,7 @@ init -998 python:
         return None
 
     class FolderSprite(LayeredImage):
-        def __init__(self, folder_path, sort = [], attributes = [], sort_together = False, *args, **kwargs):
+        def __init__(self, folder_path, sort = [], attributes = [], sort_together = False, auto_attributes = False, *args, **kwargs):
             
             global _sprite_images
             _sprite_images.append(self)
@@ -61,7 +61,7 @@ init -998 python:
                     if str("/".join(path_list[:-1]))==folder_path:
                         self._base_imgs.append([path_list[-1].split(".")[0], Transform(path, **current_transforms)])
                     else:
-                        if path_list[-2] not in attributes:
+                        if path_list[-2] not in attributes and auto_attributes is False:
                             if hasattr(self, path_list[-2]) is False:
                                 setattr(self, path_list[-2], kwargs[path_list[-2]] if path_list[-2] in kwargs else 'default') 
                                 if path_list[-2] in kwargs:
@@ -75,6 +75,8 @@ init -998 python:
                                     Transform(path, **current_transforms),
                                     "True", Null())])
                         else:
+                            if auto_attributes and path_list[-2] not in attributes:
+                                attributes.append(path_list[-2])
                             if path_list[-2] not in self._attributes_and_paths:
                                 self._attributes_and_paths[path_list[-2]] = []
                             self._attributes_and_paths[path_list[-2]].append(Attribute(path_list[-2], path_list[-1].split(".")[0], path, True if path_list[-2] in kwargs and kwargs[path_list[-2]]==path_list[-1].split(".")[0] else path_list[-1].split(".")[0]=='default' and path_list[-2] not in kwargs, **current_transforms))
