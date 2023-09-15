@@ -13,7 +13,7 @@ You can jump to [FolderSprite vs Layeredimage](#foldersprite-vs-layeredimage-and
 
 ## FolderSprite class
 
-### FolderSprite(`folder_path`, `sort` = [], `attributes` = [], `sort_together` = False, `**properties`)
+### FolderSprite(`folder_path`, `sort` = [], `attributes` = [], `sort_together` = False, `auto_attributes` = False, `**properties`)
 
 This will generate an image-like object that can be used as a displayable.
 
@@ -41,7 +41,7 @@ image clara = FolderSprite(
 
 ### `attributes` param
 
-A string or string list that contains the name(s) of the image group(s) that will be considered as attribute group(s).
+A string or string list that contains the name(s) of the image group(s) that will be defined as attribute group(s).
 
 When an image group is defined as an attribute group, all the images in that group become attributes.
 
@@ -49,12 +49,12 @@ When an image group is defined as an attribute group, all the images in that gro
 image clara = FolderSprite(
     "images/clara",
     sort = ["face", "outfit"],
-    attributes = ["face", "outfit"]) # the image group face and outfit are now attribute groups
+    attributes = ["face", "outfit"]) # the image groups face and outfit are now attribute groups
 ```
 
 ### `sort_together` param
 
-If True, Sorts all base images, image groups and attribute groups on the same layer.
+If True, sorts all base images, image groups and attribute groups on the same layer.
 
 There are 3 layers in the sprite and these are:
 
@@ -74,6 +74,18 @@ image clara = FolderSprite(
     sort_together = True) # defining sort_together to True
 ```
 
+### `auto_attributes` param
+
+If True, defines all image groups as attribute groups automatically.
+
+```python
+image clara = FolderSprite(
+    "images/clara",
+    sort = ["face", "left_arm", "outfit"],
+    auto_attributes = True, # the face and outfit attribute groups will be defined automatically
+    sort_together = True)
+```
+
 ### default keywords
 
 An image group can have a default image that will be displayed as soon as the sprite is shown for the first time. This default image can be defined in two ways:
@@ -86,7 +98,7 @@ Another way to set an image as the default within an image/attribute group is to
 image clara = FolderSprite(
     "images/clara",
     sort = ["face", "left_arm", "outfit"],
-    attributes = ["face", "outfit"],
+    auto_attributes = True,
     sort_together = True,
     face = "happy", # now the happy image is the face group's default image
     outfit = "casual") # now the casual image is the outfit group's default image
@@ -104,7 +116,7 @@ Any other keywords will be interpreted as [transform properties](https://www.ren
 image clara = FolderSprite(
     "images/clara",
     sort = ["face", "left_arm", "outfit"],
-    attributes = ["face", "outfit"],
+    auto_attributes = True,
     sort_together = True,
     face = "happy",
     outfit = "casual",
@@ -120,7 +132,7 @@ You can also apply transform properties to only one image or image/attribute gro
 image clara = FolderSprite(
     "images/clara",
     sort = ["face", "left_arm", "outfit"],
-    attributes = ["face", "outfit"],
+    auto_attributes = True,
     sort_together = True,
     face = "happy",
     outfit = "casual",
@@ -197,7 +209,7 @@ Defining Augustina with FolderSprite:
 ```python
 image augustina = FolderSprite(
     "images/augustina",
-    attributes = ["outfit", "face"],
+    auto_attributes = True,
     outfit = "dress",
     face = "neutral")
 ```
@@ -318,8 +330,6 @@ image kai = FolderSprite(
     sort_together = True,
     zoom = 0.9)
 ```
-
-Using FolderSprite we can have a more organized view of the structures that compose our sprite.
 
 Now let's check the folder structure of our sprite:
 
