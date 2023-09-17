@@ -378,4 +378,6 @@ label start:
 
 ## Advice :warning:
 
-## License :love_letter:
+## License :balance_scale:
+
+MIT License
