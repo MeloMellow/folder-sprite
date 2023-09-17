@@ -1,7 +1,7 @@
 <img src="repo-imgs/meme.jpg">
 <br></br>
 
-# FolderSprite
+# FolderSprite :open_file_folder:
 
 FolderSprite is the easy solution when you have a sprite with a wide range of images.
 
