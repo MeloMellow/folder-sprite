@@ -7,11 +7,11 @@ FolderSprite is the easy solution when you have a sprite with a wide range of im
 
 Different from a Layeredimage (Renpy's default solution), FolderSprite uses a root folder given by the user to define and map the attributes and images of a sprite automatically.
 
-## Installation
+## Installation :arrow_down_small:
 
 Download the repository and extract everything inside the game folder to your project's game folder. It's done!
 
-## FolderSprite class
+## FolderSprite class and usage examples :page_facing_up:
 
 ### FolderSprite(`folder_path`, `sort` = [], `attributes` = [], `sort_together` = False, `auto_attributes` = False, `**properties`)
 
@@ -26,7 +26,7 @@ Every image inside the `folder_path` directory will be considered a base image f
 Every folder inside the `folder_path` directory will be considered an image group. An image group can become an attribute group when defined by the user.
 
 ```python
-image clara = FolderSprite("images/clara") # clara images directory
+image clara = FolderSprite("images/clara") # defining clara sprite
 ```
 
 ### `sort` param
@@ -142,7 +142,7 @@ image clara = FolderSprite(
     outfit_casual_blur = 2.3) # we applied a blur only to the casual image of the outfit attribute group
 ```
 
-## Manipulating image groups
+## Manipulating image groups :bookmark_tabs:
 
 By default Renpy already gives us a way to manipulate the attributes of the sprite that is being projected onto the screen, but how do we manipulate a group of images that is not an attribute group?
 
@@ -181,7 +181,7 @@ label start:
 
 Note that we only use fschange/fsc to change the behavior of a image group that is not an attribute group. Using fschange/fsc to change the behavior of an attribute group will not work.
 
-## FolderSprite vs Layeredimage and more examples
+## FolderSprite vs Layeredimage and more examples :crossed_flags:
 
 The following will compare examples of sprites made with FolderSprite and with Layeredimages.
 
@@ -376,4 +376,6 @@ label start:
     "but he likes this hairstyle even more"
 ```
 
-## Advice
+## Advice :warning:
+
+## License :love_letter:
