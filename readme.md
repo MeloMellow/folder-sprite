@@ -7,9 +7,9 @@ FolderSprite is the easy solution when you have a sprite with a wide range of im
 
 Different from a Layeredimage (Renpy's default solution), FolderSprite uses a root folder given by the user to define and map the attributes and images of a sprite automatically.
 
-You can jump to [FolderSprite vs Layeredimage](#foldersprite-vs-layeredimage-and-more-examples) section to see usage examples.
-
 ## Installation
+
+Download the repository and extract everything inside the game folder to your project's game folder. It's done!
 
 ## FolderSprite class
 
@@ -293,7 +293,7 @@ Now we'll define Kai's sprite:
     two frontal hairs,
     two back hairs.
 
-Unlike the previous examples, Kai will have 2 images that form a single one to define his hair: the front hair in front of his face and the back hair behind his face and body.
+Unlike the previous examples, Kai will have 2 images that form a single one to define his hair: the front hair in front of his body(the body contaíns the head) and the back hair behind his body.
 
 Defining Kai with Layeredimage:
 
