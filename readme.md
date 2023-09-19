@@ -82,7 +82,7 @@ If True, defines all image groups as attribute groups automatically.
 image clara = FolderSprite(
     "images/clara",
     sort = ["face", "left_arm", "outfit"],
-    auto_attributes = True, # the face and outfit attribute groups will be defined automatically
+    auto_attributes = True, # the face and outfit image groups will be defined automatically as attribute groups
     sort_together = True)
 ```
 
