@@ -104,7 +104,7 @@ image clara = FolderSprite(
     outfit = "casual") # now the casual image is the outfit group's default image
 
 label start:
-    show clara# displaying clara with happy face and casual outfit
+    show clara # displaying clara with happy face and casual outfit
     "Clara likes this outfit."
 ```
 
