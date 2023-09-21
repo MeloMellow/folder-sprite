@@ -13,7 +13,7 @@ Download the repository and extract everything inside the game folder to your pr
 
 ## FolderSprite class and usage examples :page_facing_up:
 
-### **FolderSprite**(`folder_path`, `sort` = [], `attributes` = [], `sort_together` = False, `auto_attributes` = False, `**properties`)
+### class **FolderSprite**(`folder_path`, `sort` = [], `attributes` = [], `sort_together` = False, `auto_attributes` = False, `**properties`)
 
 This will generate an image-like object that can be used as a displayable.
 
