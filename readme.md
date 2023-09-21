@@ -378,6 +378,10 @@ label start:
 
 ## Advice :warning:
 
+Use underscores in folder and image filenames. Avoid using spaces or complex characters when naming folders and image files; if you want to separate words, use underscore.
+
+If your sprite has a large number of attribute groups, avoid using the `auto_attributes` param, as you may end up losing track of how many attributes it has.
+
 ## License :balance_scale:
 
 MIT License
