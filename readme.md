@@ -13,7 +13,7 @@ Download the repository and extract everything inside the game folder to your pr
 
 ## FolderSprite class and usage examples :page_facing_up:
 
-### FolderSprite(`folder_path`, `sort` = [], `attributes` = [], `sort_together` = False, `auto_attributes` = False, `**properties`)
+### **FolderSprite**(`folder_path`, `sort` = [], `attributes` = [], `sort_together` = False, `auto_attributes` = False, `**properties`)
 
 This will generate an image-like object that can be used as a displayable.
 
@@ -21,9 +21,9 @@ This will generate an image-like object that can be used as a displayable.
 
 A string containing the path where the sprite images are located.
 
-Every image inside the `folder_path` directory will be considered a base image for the sprite, which means that it will always appear when the sprite is shown.
+Every image inside the `folder_path` directory will be considered a **base image** for the sprite, which means that it will always appear when the sprite is shown.
 
-Every folder inside the `folder_path` directory will be considered an image group. An image group can become an attribute group when defined by the user.
+Every folder inside the `folder_path` directory will be considered an **image group**. An image group can become an **attribute group** when defined by the user.
 
 ```python
 image clara = FolderSprite("images/clara") # defining clara sprite
@@ -56,11 +56,11 @@ image clara = FolderSprite(
 
 If True, sorts all base images, image groups and attribute groups on the same layer.
 
-There are 3 layers in the sprite and these are:
+There are **3 layers** in the sprite and these are:
 
-- Base images
-- Image groups
-- Attribute groups
+- **Base images**
+- **Image groups**
+- **Attribute groups**
 
 By default the Attribute groups always come first, then the Image groups and finally the Base images.
 
@@ -146,7 +146,7 @@ image clara = FolderSprite(
 
 By default Renpy already gives us a way to manipulate the attributes of the sprite that is being projected onto the screen, but how do we manipulate a group of images that is not an attribute group?
 
-This is easy, just use the fschange statement or, if you prefer, the python function fsc:
+This is easy, just use the **fschange** statement or, if you prefer, the python function **fsc**:
 
     fschange [image] [image group] [image from the group]
     fsc("[image]").[image group] = "[image from the group]"
@@ -378,9 +378,7 @@ label start:
 
 ## Advice :warning:
 
-Use underscores in folder and image filenames. Avoid using spaces or complex characters when naming folders and image files; if you want to separate words, use underscore.
-
-If your sprite has a large number of attribute groups, avoid using the `auto_attributes` param, as you may end up losing track of how many attributes it has.
+Use **underscores** in folder and image filenames. Avoid using spaces or complex characters when naming folders and image files; if you want to separate words, use underscore.
 
 ## License :balance_scale:
 
