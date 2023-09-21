@@ -17,7 +17,7 @@ Download the repository and extract everything inside the game folder to your pr
 
 This will generate an image-like object that can be used as a displayable.
 
-### `folder_path` param
+#### `folder_path` param
 
 A string containing the path where the sprite images are located.
 
@@ -29,7 +29,7 @@ Every folder inside the `folder_path` directory will be considered an **image gr
 image clara = FolderSprite("images/clara") # defining clara sprite
 ```
 
-### `sort` param
+#### `sort` param
 
 A string or string list that contain(s) the element(s) you want to be in front of the sprite. These elements can be the name of image group or base image.
 
@@ -39,7 +39,7 @@ image clara = FolderSprite(
     sort = ["face", "outfit"]) # making sure that the face always appears on the front of the outfit
 ```
 
-### `attributes` param
+#### `attributes` param
 
 A string or string list that contains the name(s) of the image group(s) that will be defined as attribute group(s).
 
@@ -52,7 +52,7 @@ image clara = FolderSprite(
     attributes = ["face", "outfit"]) # the image groups face and outfit are now attribute groups
 ```
 
-### `sort_together` param
+#### `sort_together` param
 
 If True, sorts all base images, image groups and attribute groups on the same layer.
 
@@ -74,7 +74,7 @@ image clara = FolderSprite(
     sort_together = True) # defining sort_together to True
 ```
 
-### `auto_attributes` param
+#### `auto_attributes` param
 
 If True, defines all image groups as attribute groups automatically.
 
@@ -86,7 +86,7 @@ image clara = FolderSprite(
     sort_together = True)
 ```
 
-### default keywords
+#### Default keywords
 
 An image group can have a default image that will be displayed as soon as the sprite is shown for the first time. This default image can be defined in two ways:
 
@@ -108,7 +108,7 @@ label start:
     "Clara likes this outfit."
 ```
 
-### other keywords
+#### Other keywords
 
 Any other keywords will be interpreted as [transform properties](https://www.renpy.org/doc/html/atl.html#list-of-transform-properties) for the entire sprite.
 
