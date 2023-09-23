@@ -33,7 +33,7 @@ init -999 python:
 init -998 python:
 
     def _isPathWithCompatibleFormat(path):
-        format_list = [".png", ".jpg", ".webp"]
+        format_list = [".png", ".webp"]
         for x in format_list:
             if path.endswith(x):
                 return True

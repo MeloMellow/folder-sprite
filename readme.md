@@ -5,7 +5,12 @@
 
 FolderSprite is the easy solution when you have a sprite with a wide range of images.
 
-Different from a Layeredimage (Renpy's default solution), FolderSprite uses a root folder given by the user to define and map the attributes and images of a sprite automatically.
+FolderSprite is an abstraction of LayeredImage (Ren'Py's default solution). Different from a default Layeredimage, FolderSprite uses a root folder given by the user to define and map the attributes and images of a sprite automatically and thus create a LayeredImage.
+
+## Requirements :hand:
+
+- FolderSprite will only work with **Ren'Py version 8.0.0** or higher.
+- FolderSprite only supports images in **.png** or **.webp** format.
 
 ## Installation :arrow_down_small:
 
@@ -144,7 +149,7 @@ image clara = FolderSprite(
 
 ## Manipulating image groups :bookmark_tabs:
 
-By default Renpy already gives us a way to manipulate the attributes of the sprite that is being projected onto the screen, but how do we manipulate a group of images that is not an attribute group?
+By default Ren'Py already gives us a way to manipulate the attributes of the sprite that is being projected onto the screen, but how do we manipulate a group of images that is not an attribute group?
 
 This is easy, just use the **fschange** statement or, if you prefer, the python function **fsc**:
 
