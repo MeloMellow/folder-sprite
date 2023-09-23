@@ -9,7 +9,7 @@ FolderSprite is an abstraction of LayeredImage (Ren'Py's default solution). Diff
 
 ## Requirements :hand:
 
-- Only work with **Ren'Py version 8.0.0** or higher.
+- Only works with **Ren'Py version 8.0.0** or higher.
 - Only supports images in **.png** or **.webp** format.
 
 ## Installation :arrow_down_small:
