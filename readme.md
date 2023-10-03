@@ -285,7 +285,7 @@ Defining Angela with FolderSprite:
 image angela = FolderSprite("images/angela")
 ```
 
-FolderSprite doesn't need variables to manipulate an image group, because [fschange](#manipulating-image-groups) already does the job.
+FolderSprite doesn't need variables to manipulate an image group, because [fschange](#manipulating-image-groups-bookmark_tabs) already does the job.
 
 ### Example 3
 
